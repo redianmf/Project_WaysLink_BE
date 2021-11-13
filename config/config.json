@@ -1,0 +1,31 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "dumb_links",
+    "host": "localhost",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "timezone": "+07:00"
+    },
+    "timezone": "+07:00"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
