@@ -43,7 +43,7 @@ exports.publish = async (req, res) => {
 
     let brandLinks = await links.findAll({
       where: {
-        brand_id: newBrand.id,
+        brand_id: newBrandData.id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
