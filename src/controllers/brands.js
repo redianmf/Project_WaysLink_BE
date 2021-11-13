@@ -7,14 +7,14 @@ exports.publish = async (req, res) => {
   let { formLinks } = req.body;
 
   try {
-    // const result = await cloudinary.uploader.upload(req.file.path, {
-    //   folder: "wayslink",
-    //   use_filename: true,
-    //   unique_filename: false,
-    // });
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "wayslink",
+      use_filename: true,
+      unique_filename: true,
+    });
 
     const data = {
-      brandImage: req.file.filename,
+      brandImage: result.public_id,
       brandName: req.body.brandName,
       description: req.body.description,
       user_id: id,
