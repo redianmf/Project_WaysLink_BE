@@ -21,6 +21,8 @@ module.exports = {
             "$2b$10$oSsRLk8xx121cyqEVGgNG.WE/0WcDAMWMm2xaTrUiEepLyZubpxT2", //1234567
           fullName: "admin",
           role: "admin",
+          createdAt: "2021-11-04 13:46:10",
+          updatedAt: "2021-11-04 19:19:20",
         },
       ],
       {}
