@@ -35,7 +35,7 @@ exports.publish = async (req, res) => {
     const linksArray = JSON.parse(formLinks);
     const linksData = linksArray.map((v) => ({
       ...v,
-      brand_id: newBrand.id,
+      brand_id: parseInt(newBrand.id),
       clickCount: 0,
     }));
 
