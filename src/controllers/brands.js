@@ -17,7 +17,7 @@ exports.publish = async (req, res) => {
       brandImage: result.public_id,
       brandName: req.body.brandName,
       description: req.body.description,
-      user_id: id,
+      user_id: parseInt(id),
       brandUrl: req.body.brandUrl,
     };
 
@@ -25,7 +25,7 @@ exports.publish = async (req, res) => {
 
     let newBrandData = await brands.findOne({
       where: {
-        id: newBrand.id,
+        id: parseInt(newBrand.id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -43,7 +43,7 @@ exports.publish = async (req, res) => {
 
     let brandLinks = await links.findAll({
       where: {
-        brand_id: newBrand.id,
+        brand_id: parseInt(newBrand.id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -74,7 +74,7 @@ exports.getBrands = async (req, res) => {
   try {
     let brandsData = await brands.findAll({
       where: {
-        user_id: id,
+        user_id: parseInt(id),
       },
       include: [
         {
@@ -130,7 +130,7 @@ exports.getBrand = async (req, res) => {
   try {
     let brandData = await brands.findOne({
       where: {
-        id,
+        id: parseInt(id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -139,7 +139,7 @@ exports.getBrand = async (req, res) => {
 
     let linksData = await links.findAll({
       where: {
-        brand_id: id,
+        brand_id: parseInt(id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -181,7 +181,7 @@ exports.editBrand = async (req, res) => {
   try {
     let existBrand = await brands.findOne({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -208,7 +208,7 @@ exports.editBrand = async (req, res) => {
 
     let newBrandData = await brands.findOne({
       where: {
-        id,
+        id: parseInt(id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -223,7 +223,7 @@ exports.editBrand = async (req, res) => {
 
     let brandLinks = await links.findAll({
       where: {
-        id,
+        id: parseInt(id),
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -264,19 +264,19 @@ exports.deleteBrand = async (req, res) => {
   try {
     let brandData = await brands.findOne({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
     await brands.destroy({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
     await links.destroy({
       where: {
-        brand_id: id,
+        brand_id: parseInt(id),
       },
     });
 
@@ -310,7 +310,7 @@ exports.getLinks = async (req, res) => {
   try {
     const linksData = await links.findAll({
       where: {
-        brand_id: id,
+        brand_id: parseInt(id),
       },
     });
 
@@ -333,7 +333,7 @@ exports.addLinkCount = async (req, res) => {
   try {
     let linkData = await links.findOne({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -343,7 +343,7 @@ exports.addLinkCount = async (req, res) => {
 
     let addCount = await links.update(data, {
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
