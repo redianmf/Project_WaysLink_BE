@@ -1,4 +1,5 @@
 const { users, brands, links } = require("../../models");
+const cloudinary = require("../utils/cloudinary");
 var fs = require("fs");
 
 exports.publish = async (req, res) => {
@@ -6,9 +7,14 @@ exports.publish = async (req, res) => {
   let { formLinks } = req.body;
 
   try {
-    // return res.send(formLinks);
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "wayslink",
+      use_filename: true,
+      unique_filename: false,
+    });
+
     const data = {
-      brandImage: req.file.filename,
+      brandImage: result.public_id,
       brandName: req.body.brandName,
       description: req.body.description,
       user_id: id,
@@ -186,7 +192,12 @@ exports.editBrand = async (req, res) => {
     };
 
     if (req.file) {
-      data.brandImage = req?.file?.filename;
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "wayslink",
+        use_filename: true,
+        unique_filename: false,
+      });
+      data.brandImage = result.public_id;
     }
 
     let newBrand = await brands.update(data, {
