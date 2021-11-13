@@ -41,14 +41,14 @@ exports.publish = async (req, res) => {
 
     await links.bulkCreate(linksData);
 
-    let brandLinks = await links.findAll({
-      where: {
-        brand_id: newBrandData.id,
-      },
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
+    // let brandLinks = await links.findAll({
+    //   where: {
+    //     brand_id: newBrandData.id,
+    //   },
+    //   attributes: {
+    //     exclude: ["createdAt", "updatedAt"],
+    //   },
+    // });
 
     res.send({
       status: "success",
@@ -57,7 +57,7 @@ exports.publish = async (req, res) => {
           ...newBrandData.dataValues,
           brandImage: process.env.FILE_PATH + newBrandData.brandImage,
         },
-        links: brandLinks,
+        // links: brandLinks,
       },
     });
   } catch (error) {
