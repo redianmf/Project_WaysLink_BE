@@ -10,7 +10,7 @@ exports.publish = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "wayslink",
       use_filename: true,
-      unique_filename: false,
+      unique_filename: true,
     });
 
     const data = {
@@ -50,7 +50,7 @@ exports.publish = async (req, res) => {
       },
     });
 
-    res.json({
+    res.send({
       status: "success",
       data: {
         brand: {
@@ -62,7 +62,7 @@ exports.publish = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -109,7 +109,7 @@ exports.getBrands = async (req, res) => {
       };
     });
 
-    res.json({
+    res.send({
       status: "success",
       data: {
         brands: allBrands,
@@ -117,7 +117,7 @@ exports.getBrands = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -158,7 +158,7 @@ exports.getBrand = async (req, res) => {
       hostUrl: process.env.FILE_PATH,
     };
 
-    res.json({
+    res.send({
       status: "success",
       data: {
         brand: dataBrand,
@@ -167,7 +167,7 @@ exports.getBrand = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -240,7 +240,7 @@ exports.editBrand = async (req, res) => {
       });
     }
 
-    res.json({
+    res.send({
       status: "success",
       data: {
         brand: {
@@ -252,7 +252,7 @@ exports.editBrand = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -283,13 +283,13 @@ exports.deleteBrand = async (req, res) => {
     fs.unlink("uploads/" + brandData.brandImage, (err) => {
       if (err) {
         console.log(err);
-        res.json({
+        res.send({
           status: "failed",
           message: "Cannot delete file",
         });
       } else {
         console.log("File deleted");
-        res.json({
+        res.send({
           status: "success",
           message: "File successfully deleted",
         });
@@ -297,7 +297,7 @@ exports.deleteBrand = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -314,13 +314,13 @@ exports.getLinks = async (req, res) => {
       },
     });
 
-    res.json({
+    res.send({
       status: "success",
       data: linksData,
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -347,13 +347,13 @@ exports.addLinkCount = async (req, res) => {
       },
     });
 
-    res.json({
+    res.send({
       status: "succcess",
       message: `Link ${id} succesfully added 1 click count`,
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -365,13 +365,13 @@ exports.deleteImage = async (req, res) => {
     fs.unlink("uploads/1636003320822-hokben.png", (err) => {
       if (err) {
         console.log(err);
-        res.json({
+        res.send({
           status: "failed",
           message: "Cannot delete file",
         });
       } else {
         console.log("File deleted");
-        res.json({
+        res.send({
           status: "success",
           message: "File successfully deleted",
         });
@@ -379,7 +379,7 @@ exports.deleteImage = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
@@ -388,13 +388,13 @@ exports.deleteImage = async (req, res) => {
 
 exports.getHost = async (req, res) => {
   try {
-    res.json({
+    res.send({
       status: "success",
       data: process.env.FILE_PATH,
     });
   } catch (error) {
     console.log(error);
-    res.json({
+    res.send({
       status: "failed",
       message: "Server Error",
     });
