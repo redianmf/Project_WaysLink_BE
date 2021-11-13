@@ -10,14 +10,14 @@ exports.publish = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "wayslink",
       use_filename: true,
-      unique_filename: true,
+      unique_filename: false,
     });
 
     const data = {
       brandImage: result.public_id,
       brandName: req.body.brandName,
       description: req.body.description,
-      user_id: parseInt(id),
+      user_id: id,
       brandUrl: req.body.brandUrl,
     };
 
@@ -25,7 +25,7 @@ exports.publish = async (req, res) => {
 
     let newBrandData = await brands.findOne({
       where: {
-        id: parseInt(newBrand.id),
+        id: newBrand.id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -35,7 +35,7 @@ exports.publish = async (req, res) => {
     const linksArray = JSON.parse(formLinks);
     const linksData = linksArray.map((v) => ({
       ...v,
-      brand_id: parseInt(newBrand.id),
+      brand_id: newBrand.id,
       clickCount: 0,
     }));
 
@@ -43,7 +43,7 @@ exports.publish = async (req, res) => {
 
     let brandLinks = await links.findAll({
       where: {
-        brand_id: parseInt(newBrand.id),
+        brand_id: newBrand.id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -74,7 +74,7 @@ exports.getBrands = async (req, res) => {
   try {
     let brandsData = await brands.findAll({
       where: {
-        user_id: parseInt(id),
+        user_id: id,
       },
       include: [
         {
@@ -130,7 +130,7 @@ exports.getBrand = async (req, res) => {
   try {
     let brandData = await brands.findOne({
       where: {
-        id: parseInt(id),
+        id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -139,7 +139,7 @@ exports.getBrand = async (req, res) => {
 
     let linksData = await links.findAll({
       where: {
-        brand_id: parseInt(id),
+        brand_id: id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -181,7 +181,7 @@ exports.editBrand = async (req, res) => {
   try {
     let existBrand = await brands.findOne({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
 
@@ -208,7 +208,7 @@ exports.editBrand = async (req, res) => {
 
     let newBrandData = await brands.findOne({
       where: {
-        id: parseInt(id),
+        id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -223,7 +223,7 @@ exports.editBrand = async (req, res) => {
 
     let brandLinks = await links.findAll({
       where: {
-        id: parseInt(id),
+        id,
       },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -264,19 +264,19 @@ exports.deleteBrand = async (req, res) => {
   try {
     let brandData = await brands.findOne({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
 
     await brands.destroy({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
 
     await links.destroy({
       where: {
-        brand_id: parseInt(id),
+        brand_id: id,
       },
     });
 
@@ -310,7 +310,7 @@ exports.getLinks = async (req, res) => {
   try {
     const linksData = await links.findAll({
       where: {
-        brand_id: parseInt(id),
+        brand_id: id,
       },
     });
 
@@ -333,7 +333,7 @@ exports.addLinkCount = async (req, res) => {
   try {
     let linkData = await links.findOne({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
 
@@ -343,7 +343,7 @@ exports.addLinkCount = async (req, res) => {
 
     let addCount = await links.update(data, {
       where: {
-        id: parseInt(id),
+        id,
       },
     });
 
