@@ -11,6 +11,12 @@ app.use(express.json());
 
 app.use(cors());
 
+app.get("/", function (req, res) {
+  res.send({
+    message: "Hello World",
+  });
+});
+
 app.use("/api/v1/", router);
 
 app.use("/uploads", express.static("uploads"));
