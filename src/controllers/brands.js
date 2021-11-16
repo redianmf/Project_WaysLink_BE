@@ -7,60 +7,59 @@ exports.publish = async (req, res) => {
   let { formLinks } = req.body;
 
   try {
-    return res.send(req.file.path);
-    // const result = await cloudinary.uploader.upload(req.file.path, {
-    //   folder: "wayslink",
-    //   use_filename: true,
-    //   unique_filename: false,
-    // });
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "wayslink",
+      use_filename: true,
+      unique_filename: false,
+    });
 
-    // const data = {
-    //   brandImage: result.public_id,
-    //   brandName: req.body.brandName,
-    //   description: req.body.description,
-    //   user_id: id,
-    //   brandUrl: req.body.brandUrl,
-    // };
+    const data = {
+      brandImage: result.public_id,
+      brandName: req.body.brandName,
+      description: req.body.description,
+      user_id: id,
+      brandUrl: req.body.brandUrl,
+    };
 
-    // let newBrand = await brands.create(data);
+    let newBrand = await brands.create(data);
 
-    // let newBrandData = await brands.findOne({
-    //   where: {
-    //     id: newBrand.id,
-    //   },
-    //   attributes: {
-    //     exclude: ["createdAt", "updatedAt"],
-    //   },
-    // });
+    let newBrandData = await brands.findOne({
+      where: {
+        id: newBrand.id,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
 
-    // const linksArray = JSON.parse(formLinks);
-    // const linksData = linksArray.map((v) => ({
-    //   ...v,
-    //   brand_id: newBrand.id,
-    //   clickCount: 0,
-    // }));
+    const linksArray = JSON.parse(formLinks);
+    const linksData = linksArray.map((v) => ({
+      ...v,
+      brand_id: newBrand.id,
+      clickCount: 0,
+    }));
 
-    // await links.bulkCreate(linksData);
+    await links.bulkCreate(linksData);
 
-    // let brandLinks = await links.findAll({
-    //   where: {
-    //     brand_id: newBrandData.id,
-    //   },
-    //   attributes: {
-    //     exclude: ["createdAt", "updatedAt"],
-    //   },
-    // });
+    let brandLinks = await links.findAll({
+      where: {
+        brand_id: newBrandData.id,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
 
-    // res.send({
-    //   status: "success",
-    //   data: {
-    //     brand: {
-    //       ...newBrandData.dataValues,
-    //       brandImage: process.env.FILE_PATH + newBrandData.brandImage,
-    //     },
-    //     links: brandLinks,
-    //   },
-    // });
+    res.send({
+      status: "success",
+      data: {
+        brand: {
+          ...newBrandData.dataValues,
+          brandImage: process.env.FILE_PATH + newBrandData.brandImage,
+        },
+        links: brandLinks,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.send({
