@@ -154,7 +154,7 @@ exports.getBrand = async (req, res) => {
     let newBrandData = JSON.parse(JSON.stringify(brandData));
     let dataBrand = {
       ...newBrandData,
-      brandImage: process.env.FILE_PATH + "wayslink/" + brandData.brandImage,
+      brandImage: process.env.FILE_PATH + brandData.brandImage,
       hostUrl: process.env.FILE_PATH,
     };
 
